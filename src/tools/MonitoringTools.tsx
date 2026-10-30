@@ -13,6 +13,8 @@ export function UptimeView(props: { csrfToken: string }): ReactNode {
   const [url, setUrl] = useState('')
   const [name, setName] = useState('')
   const [busy, setBusy] = useState(false)
+  const [confirmId, setConfirmId] = useState<string | null>(null)
+  const [removingId, setRemovingId] = useState<string | null>(null)
 
   const load = async () => {
     try {
@@ -57,6 +59,25 @@ export function UptimeView(props: { csrfToken: string }): ReactNode {
     }
   }
 
+  const removeMonitor = async (m: UptimeMonitor) => {
+    if (confirmId !== m.id) { setConfirmId(m.id); return }
+    setConfirmId(null)
+    setRemovingId(m.id)
+    setError('')
+    try {
+      await callManage(props.csrfToken, '/api/uptime/monitors/delete', {
+        method: 'POST',
+        body: JSON.stringify({ monitorId: m.id }),
+      })
+      setMonitors((prev) => prev.filter((x) => x.id !== m.id))
+      if (selected?.id === m.id) { setSelected(null); setChecks([]) }
+    } catch (e) {
+      setError(e instanceof ApiError ? e.message : 'The monitor could not be removed.')
+    } finally {
+      setRemovingId(null)
+    }
+  }
+
   if (loading) return <Loading />
   return (
     <div>
@@ -81,7 +102,12 @@ export function UptimeView(props: { csrfToken: string }): ReactNode {
                     <td><Pill kind={m.status === 'up' ? 'ok' : m.status === 'down' ? 'bad' : 'plain'}>{m.status}</Pill></td>
                     <td>{m.uptimePct === null ? '—' : `${m.uptimePct}%`}</td>
                     <td className="small muted">{m.lastCheckedAt || 'Not checked yet'}</td>
-                    <td><button type="button" className="ghost-btn" onClick={() => void openChecks(m)}>History</button></td>
+                    <td>
+                      <button type="button" className="ghost-btn" onClick={() => void openChecks(m)}>History</button>{' '}
+                      <button type="button" className="ghost-btn" disabled={removingId === m.id} onClick={() => void removeMonitor(m)}>
+                        {removingId === m.id ? 'Removing…' : confirmId === m.id ? 'Confirm remove?' : 'Remove'}
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

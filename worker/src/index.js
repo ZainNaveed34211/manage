@@ -304,6 +304,19 @@ export default {
       return jsonResponse(origin, 200, { ok: true, checks })
     }
 
+    if (method === 'POST' && path === '/api/uptime/monitors/delete') {
+      const denied = requireTool(origin, auth, 'uptime')
+      if (denied) return denied
+      const body = await readJson(request)
+      const monitorId = typeof body.monitorId === 'string' ? body.monitorId : ''
+      if (!monitorId) return errorResponse(origin, 400, 'Monitor not found.')
+      const owner = await env.DB.prepare('SELECT id FROM uptime_monitors WHERE id = ? AND user_id = ?').bind(monitorId, auth.userId).first()
+      if (!owner) return errorResponse(origin, 404, 'Monitor not found.')
+      await env.DB.prepare('DELETE FROM uptime_checks WHERE monitor_id = ?').bind(monitorId).run()
+      await env.DB.prepare('DELETE FROM uptime_monitors WHERE id = ? AND user_id = ?').bind(monitorId, auth.userId).run()
+      return jsonResponse(origin, 200, { ok: true, deleted: true })
+    }
+
     // ---- Performance ----
     if (method === 'POST' && path === '/api/performance/check') {
       const denied = requirePremium(origin, auth)
