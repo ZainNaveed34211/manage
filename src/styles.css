@@ -51,7 +51,8 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .shell { display: flex; min-height: 100vh; }
 .sidebar {
   width: 248px; flex-shrink: 0;
-  background: var(--navy); color: #fff;
+  /* True navy blue panel (Zain) so the logo stands out clearly. */
+  background: #000080; color: #fff;
   padding: 20px 16px; display: flex; flex-direction: column; gap: 8px;
   position: sticky; top: 0; height: 100vh;
 }

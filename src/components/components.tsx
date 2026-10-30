@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react'
-import { LOGO_URL, LOGO_DARK_URL } from '../logoData'
+import { LOGO_DARK_URL } from '../logoData'
 
 export type ToolId =
   | 'overview' | 'security' | 'security-overview' | 'uptime'
@@ -23,8 +23,8 @@ export function Sidebar(props: {
   return (
     <aside className="sidebar">
       <span className="logo">
-        {/* Exact final logo, light + dark variants exactly as the main site uses them. */}
-        <img src={props.theme === 'dark' ? LOGO_DARK_URL : LOGO_URL} alt="Kluzar" />
+        {/* Sidebar background is always dark navy, so always the dark-background logo variant (existing asset, logo itself untouched). */}
+        <img src={LOGO_DARK_URL} alt="Kluzar" />
       </span>
       <span className="plan-pill">{planLabel} plan</span>
       <nav>
