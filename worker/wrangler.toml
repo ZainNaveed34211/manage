@@ -2,15 +2,16 @@
 # No secrets in this file. The D1 database id is a placeholder forever:
 # the real id is injected at deploy time from the GitHub Variable
 # KLUZAR_ACCOUNTS_D1_ID (mirroring the account-api deploy workflow).
-# The Ed25519 public key is a plain Variable (verification keys are
-# public by design); the private key exists ONLY as a Secret on
-# kluzar-account-api and never appears here or in any repo file.
+# The Ed25519 public key is a plain Variable set in the Cloudflare
+# dashboard ONLY (verification keys are public by design). It is
+# deliberately NOT declared here: wrangler deploy would overwrite a
+# dashboard value with whatever wrangler.toml says, so declaring it
+# here (even empty) would wipe the dashboard value on every deploy.
+# The private key exists ONLY as a Secret on kluzar-account-api and
+# never appears here or in any repo file.
 name = "kluzar-manage-api"
 main = "src/index.js"
 compatibility_date = "2026-10-30"
-
-[vars]
-MANAGE_ASSERTION_PUBLIC_KEY = ""
 
 [[d1_databases]]
 binding = "DB"
