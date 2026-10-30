@@ -1,0 +1,25 @@
+# kluzar-manage-api — Cloudflare Worker (LOCAL BUILD ONLY, not deployed).
+# No secrets in this file. The D1 database id is a placeholder forever:
+# the real id is injected at deploy time from the GitHub Variable
+# KLUZAR_ACCOUNTS_D1_ID (mirroring the account-api deploy workflow).
+# The Ed25519 public key is a plain Variable (verification keys are
+# public by design); the private key exists ONLY as a Secret on
+# kluzar-account-api and never appears here or in any repo file.
+name = "kluzar-manage-api"
+main = "src/index.js"
+compatibility_date = "2026-10-30"
+
+[vars]
+MANAGE_ASSERTION_PUBLIC_KEY = ""
+
+[[d1_databases]]
+binding = "DB"
+database_name = "kluzar-accounts"
+database_id = "REPLACE_WITH_REAL_D1_DATABASE_ID"
+migrations_dir = "../migrations"
+
+[triggers]
+# Scheduled uptime checks (Cron Trigger). The scheduled handler checks
+# monitors whose interval has elapsed. Adjust the schedule at deploy
+# review; the handler itself skips monitors that are not due.
+crons = ["*/15 * * * *"]
