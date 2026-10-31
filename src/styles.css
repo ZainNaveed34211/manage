@@ -1,18 +1,18 @@
-/* Kluzar Manage — premium portal styles.
+@font-face{font-family:"Inter";font-weight:400;font-display:swap;src:url(/assets/framerusercontent.com/assets/5vvr9Vy74if2I6bQbJvbw7SY1pQ.woff2) format("woff2")}@font-face{font-family:"Inter";font-weight:500;font-display:swap;src:url(/assets/framerusercontent.com/assets/5A3Ce6C9YYmCjpQx9M4inSaKU.woff2) format("woff2")}@font-face{font-family:"Inter";font-weight:700;font-display:swap;src:url(/assets/framerusercontent.com/assets/DpPBYI0sL4fYLgAkX8KXOPVt7c.woff2) format("woff2")}@font-face{font-family:"Manrope";font-weight:500;font-display:swap;src:url(/assets/fonts.gstatic.com/s/manrope/v23/xn7gYHE41ni1AdIRggqxSuXd.woff2) format("woff2")}@font-face{font-family:"Manrope";font-weight:700;font-display:swap;src:url(/assets/fonts.gstatic.com/s/manrope/v23/xn7gYHE41ni1AdIRggqxSuXd.woff2) format("woff2")}/* Kluzar Manage — premium portal styles.
  * Palette is the logo palette only: navy #141272, violet #7c5cff,
  * cyan accent sparingly for live-status only. Light theme is the
  * default; dark theme is applied via [data-theme="dark"] on <html>.
  * No third-party fonts: the system font stack only. */
 :root {
   --navy: #141272;
-  --violet: #7c5cff;
-  --violet-soft: rgba(124, 92, 255, 0.1);
-  --bg: #f7f7f8;
+  --violet: #5F3EC1;
+  --violet-soft: rgba(95, 62, 193, 0.1);
+  --bg: #E9E8E8;
   --surface: #ffffff;
   --surface-2: #f0f0f7;
-  --text: #171a2e;
-  --muted: #5c607a;
-  --border: #e3e3ef;
+  --text: #171717;
+  --muted: #737373;
+  --border: #d4d4d4;
   --ok: #1a7f4b;
   --ok-bg: rgba(26, 127, 75, 0.1);
   --warn: #9a6a00;
@@ -20,7 +20,7 @@
   --bad: #b4232a;
   --bad-bg: rgba(180, 35, 42, 0.09);
   --live: #0ea5a4;
-  --radius: 14px;
+  --radius: 24px;
   --shadow: 0 8px 28px rgba(20, 18, 114, 0.08);
 }
 [data-theme="dark"] {
@@ -30,14 +30,14 @@
   --text: #eef0ff;
   --muted: #a5a9c4;
   --border: #2a2f52;
-  --violet-soft: rgba(157, 140, 255, 0.16);
+  --violet-soft: rgba(137, 106, 230, 0.16);
   --shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.55;
@@ -101,7 +101,7 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .pill.warn { background: var(--warn-bg); color: var(--warn); }
 .pill.bad { background: var(--bad-bg); color: var(--bad); }
 .pill.premium { background: var(--violet-soft); color: var(--violet); border: 1px solid var(--violet); }
-[data-theme="dark"] .pill.premium { color: #b7a8ff; }
+[data-theme="dark"] .pill.premium { color: #896AE6; }
 .pill.live { background: rgba(14, 165, 164, 0.12); color: var(--live); }
 .big-num { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; }
 .muted { color: var(--muted); }
@@ -155,3 +155,7 @@ textarea.notes {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+h1,h2,h3{font-family:"Manrope",sans-serif}
+.card{transition:transform .25s ease,box-shadow .25s ease}
+.card:hover{transform:translateY(-2px)}
